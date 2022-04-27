@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Link {
+public class Link extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
