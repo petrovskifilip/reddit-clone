@@ -5,28 +5,30 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import java.util.Collection;
 
-@NoArgsConstructor
+@Entity
 @RequiredArgsConstructor
 @Getter
 @Setter
-@Entity
-public class Vote extends Auditable {
+@ToString
+@NoArgsConstructor
+public class Role {
 
     @Id
     @GeneratedValue
     private Long id;
 
     @NonNull
-    private short direction;
+    private String name;
 
-    @NonNull
-    @ManyToOne
-    private Link link;
-
+    @ManyToMany(mappedBy = "roles")
+    private Collection<User> users;
 }
+
