@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/main_layout :: head(title = 'Account Profile Page')}">
+</head>
+<body>
+
+<nav th:replace="~{layouts/main_layout :: nav}"></nav>
+<div th:replace="~{layouts/main_layout :: jumbotron}"></div>
+
+<div id="profile" class="container">
+
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                Posts
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+
+        <div class="col-8">
+            <div class="row link" th:each="link : ${links}">
+                <div class="col-1">
+                    <div><a href="#" class="upvote" th:data-id="${link.id}"><i class="fas fa-arrow-up"></i></a></div>
+                    <div><span th:id="|votecount-${link.id}|" class="votecount"
+                               th:text="${link.getVoteCount()}">0</span></div>
+                    <div><a href="#" class="downvote" th:data-id="${link.id}" th:disabled="true"><i
+                            class="fas fa-arrow-down"></i></a></div>
+                </div>
+                <div class="col-11">
+                    <p class="title">
+                        <a class="title " th:href="@{'/link/' + ${link.id}}" th:text="${link.title}">
+                            Title
+                        </a>
+                        <span class="domain">(<a th:href="${link.url}" th:text="${link.getDomainName()}"
+                                                 target="_blank">.com</a>)</span>
+                    </p>
+                    <p class="tagline ">submitted
+                        <time th:title="${link.getCreatingDate()}" th:datetime="${link.getCreatingDate()}"
+                              class="live-timestamp" th:text="${link.getPrettyTime()}">1 hour(s)
+                        </time>
+                        by
+                        <a th:href="@{'/u/' + ${link.getUser().getAlias()}}" class="author"
+                           th:text="${link.getUser().getAlias()}">user</a>
+                    </p>
+                    <p>
+                        <a th:href="@{'/link/' + ${link.id} + '#comments'}" class="comments"
+                           th:text="|${link.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 offset-1">
+            <div class="row">
+                <div class="card col-12">
+                    <img class="card-img-top" th:src="@{/images/user.png}" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">
+                        <p th:text="${username}">Username</p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
